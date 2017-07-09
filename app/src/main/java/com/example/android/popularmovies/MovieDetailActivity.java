@@ -1,12 +1,12 @@
 package com.example.android.popularmovies;
 
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +23,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     @BindView(R.id.movieDetailContainerView)
-    ConstraintLayout movieDetailContainerView;
+    ScrollView movieDetailContainerView;
 
     @BindView(R.id.movieImageView)
     ImageView movieImageView;

@@ -40,6 +40,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.synopsisTextView)
     TextView synopsisTextView;
 
+    @BindView(R.id.durationTextView)
+    TextView durationTextView;
+
     private MovieApi api;
 
     @Override
@@ -95,5 +98,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         ratingTextView.setText(viewModel.getRating());
         releaseDateTextView.setText(viewModel.getReleaseDate());
         synopsisTextView.setText(viewModel.getSynopsis());
+        durationTextView.setText(viewModel.getDuration());
     }
 }

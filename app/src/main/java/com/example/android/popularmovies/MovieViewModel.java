@@ -7,6 +7,7 @@ interface MovieViewModelType {
     String getRating();
     String getReleaseDate();
     String getSynopsis();
+    String getDuration();
 }
 
 public class MovieViewModel implements  MovieViewModelType {
@@ -29,7 +30,7 @@ public class MovieViewModel implements  MovieViewModelType {
     }
 
     public String getRating() {
-        return Double.toString(movie.rating);
+        return Double.toString(movie.rating) + "/10";
     }
 
     public String getReleaseDate() {
@@ -38,5 +39,9 @@ public class MovieViewModel implements  MovieViewModelType {
 
     public String getSynopsis() {
         return movie.synopsis;
+    }
+
+    public String getDuration() {
+        return Integer.toString(movie.durationInMinutes) + " minutes";
     }
 }

@@ -32,12 +32,24 @@ class Movie {
     @SerializedName("poster_path")
     public final String previewRelativePath;
 
-    public Movie(int id, String title, double rating, String synopsis, String releaseDate, String previewRelativePath) {
+    @SerializedName("runtime")
+    public final int durationInMinutes;
+
+    public Movie(
+        int id,
+        String title,
+        double rating,
+        String synopsis,
+        String releaseDate,
+        String previewRelativePath,
+        int durationInMinutes
+    ) {
         this.id = id;
         this.title = title;
         this.rating = rating;
         this.synopsis = synopsis;
         this.releaseDate = releaseDate;
         this.previewRelativePath = previewRelativePath;
+        this.durationInMinutes = durationInMinutes;
     }
 }

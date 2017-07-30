@@ -6,4 +6,6 @@
     <string name="rating">Rating</string>
     <string name="popularMovies">Popular Movies</string>
     <string name="topRatedMovies">Top Rated Movies</string>
+    <string name="markAsFavorite">Mark As Favorite</string>
+    <string name="removeFromFavorite">Remove From Favorite</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.android.popularmovies;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -100,4 +101,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         synopsisTextView.setText(viewModel.getSynopsis());
         durationTextView.setText(viewModel.getDuration());
     }
+
+    public void markAsFavorite(View button) {
+        Log.i("MEH", "WOTTTTTTTT");
+    }
+
 }

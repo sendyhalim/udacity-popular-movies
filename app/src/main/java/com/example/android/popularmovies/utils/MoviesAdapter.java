@@ -1,4 +1,4 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.utils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.android.popularmovies.R;
+import com.example.android.popularmovies.models.MovieViewModelType;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;

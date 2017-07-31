@@ -1,28 +1,9 @@
-package com.example.android.popularmovies;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.net.Uri;
-import android.widget.Toast;
-
-import com.example.android.popularmovies.data.FavoriteMovieContract.FavoriteMovieEntry;
-import com.example.android.popularmovies.data.FavoriteMovieStorage;
-
-interface MovieViewModelType {
-    String previewImage();
-    int getId();
-    String getTitle();
-    String getRating();
-    String getReleaseDate();
-    String getSynopsis();
-    String getDuration();
-    Movie getMovie();
-}
+package com.example.android.popularmovies.models;
 
 public class MovieViewModel implements  MovieViewModelType {
     private Movie movie;
 
-    MovieViewModel(Movie movie) {
+    public MovieViewModel(Movie movie) {
         this.movie = movie;
     }
 

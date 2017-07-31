@@ -1,11 +1,10 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,7 +12,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.android.popularmovies.data.FavoriteMovieContract;
+import com.example.android.popularmovies.models.Movie;
+import com.example.android.popularmovies.utils.MovieApi;
+import com.example.android.popularmovies.models.MovieCollectionResponse;
+import com.example.android.popularmovies.models.MovieViewModel;
+import com.example.android.popularmovies.models.MovieViewModelType;
+import com.example.android.popularmovies.utils.MoviesAdapter;
+import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.data.FavoriteMovieStorage;
 
 import java.util.ArrayList;

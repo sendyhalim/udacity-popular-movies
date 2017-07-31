@@ -5,7 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.example.android.popularmovies.Movie;
+import com.example.android.popularmovies.models.Movie;
 import com.example.android.popularmovies.data.FavoriteMovieContract.FavoriteMovieEntry;
 
 import java.util.ArrayList;

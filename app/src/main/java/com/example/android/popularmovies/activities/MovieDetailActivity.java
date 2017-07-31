@@ -1,10 +1,9 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,7 +12,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.models.Movie;
+import com.example.android.popularmovies.models.MovieViewModel;
+import com.example.android.popularmovies.models.MovieViewModelType;
+import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.data.FavoriteMovieStorage;
+import com.example.android.popularmovies.utils.MovieApi;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;

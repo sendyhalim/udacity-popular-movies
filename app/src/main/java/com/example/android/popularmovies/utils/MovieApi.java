@@ -1,18 +1,17 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.utils;
 
-import android.net.Uri;
-
-import java.util.List;
+import com.example.android.popularmovies.BuildConfig;
+import com.example.android.popularmovies.models.Movie;
+import com.example.android.popularmovies.models.MovieCollectionResponse;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-class MovieApi {
+public class MovieApi {
     private static final String baseUrl = "https://api.themoviedb.org/3/";
 
     private MovieApiInterface request() {
@@ -34,25 +33,5 @@ class MovieApi {
     public Call<Movie> fetchMovie(int id) {
         return request().movie(id, BuildConfig.MOVIE_DB_API_KEY);
     }
-}
-
-interface MovieApiInterface {
-    @GET("movie/popular")
-    Call<MovieCollectionResponse> popularMovies(
-        @Query("page") int page,
-        @Query("api_key") String apiKey
-    );
-
-    @GET("movie/top_rated")
-    Call<MovieCollectionResponse> topRatedMovies(
-        @Query("page") int page,
-        @Query("api_key") String apiKey
-    );
-
-    @GET("movie/{id}")
-    Call<Movie> movie(
-        @Path("id") int id,
-        @Query("api_key") String apiKey
-    );
 }
 

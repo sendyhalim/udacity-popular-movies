@@ -1,23 +1,10 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.models;
 
 import android.database.Cursor;
 
-import com.example.android.popularmovies.data.FavoriteMovieContract;
 import com.google.gson.annotations.SerializedName;
 
 import static com.example.android.popularmovies.data.FavoriteMovieContract.*;
-
-class MovieCollectionResponse {
-    public final int page;
-
-    @SerializedName("results")
-    public final Movie[] movies;
-
-    public MovieCollectionResponse(int page, Movie[] movies) {
-        this.page = page;
-        this.movies = movies;
-    }
-}
 
 public class Movie {
     public final int id;

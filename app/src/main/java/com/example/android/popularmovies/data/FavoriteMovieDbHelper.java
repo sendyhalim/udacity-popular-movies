@@ -21,7 +21,11 @@ public class FavoriteMovieDbHelper extends SQLiteOpenHelper {
                 FavoriteMovieEntry._ID                 + " INTEGER PRIMARY KEY, " +
                 FavoriteMovieEntry.COLUMN_API_MOVIE_ID + " INTEGER UNIQUE NOT NULL, " +
                 FavoriteMovieEntry.COLUMN_TITLE        + " TEXT NOT NULL, " +
-                FavoriteMovieEntry.COLUMN_PREVIEW_URL  + " TEXT NOT NULL);";
+                FavoriteMovieEntry.COLUMN_RATING  + " TEXT NOT NULL," +
+                FavoriteMovieEntry.COLUMN_SYNOPSIS  + " TEXT NOT NULL," +
+                FavoriteMovieEntry.COLUMN_RELEASE_DATE  + " TEXT NOT NULL," +
+                FavoriteMovieEntry.COLUMN_PREVIEW_RELATIVE_PATH  + " TEXT NOT NULL," +
+                FavoriteMovieEntry.COLUMN_DURATION_IN_MINUTES  + " DOUBLE NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }

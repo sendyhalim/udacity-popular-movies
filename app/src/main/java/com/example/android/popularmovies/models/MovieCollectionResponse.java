@@ -3,6 +3,7 @@ package com.example.android.popularmovies.models;
 import com.google.gson.annotations.SerializedName;
 
 public class MovieCollectionResponse {
+    @SerializedName("page")
     public final int page;
 
     @SerializedName("results")

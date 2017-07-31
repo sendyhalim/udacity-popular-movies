@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import static com.example.android.popularmovies.data.FavoriteMovieContract.*;
 
 public class Movie {
+    @SerializedName("id")
     public final int id;
 
     @SerializedName("original_title")

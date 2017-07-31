@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.data.FavoriteMovieStorage;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -45,8 +47,15 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.durationTextView)
     TextView durationTextView;
 
+    @BindView(R.id.markAsFavoriteButton)
+    Button markAsFavoriteButton;
+
+    @BindView(R.id.removeFromFavoriteButton)
+    Button removeFromFavoriteButton;
+
     private MovieApi api;
     private MovieViewModelType viewModel;
+    private FavoriteMovieStorage favoriteMovieStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         api = new MovieApi();
+        favoriteMovieStorage = new FavoriteMovieStorage(getContentResolver());
 
         if (intent.hasExtra(Intent.EXTRA_TEXT)) {
             int id = intent.getIntExtra(Intent.EXTRA_TEXT, 0);
@@ -90,6 +100,16 @@ public class MovieDetailActivity extends AppCompatActivity {
             });
     }
 
+    private void showMarkAsFavoriteButton() {
+        removeFromFavoriteButton.setVisibility(View.INVISIBLE);
+        markAsFavoriteButton.setVisibility(View.VISIBLE);
+    }
+
+    private void showRemoveFromFavoriteButton() {
+        removeFromFavoriteButton.setVisibility(View.VISIBLE);
+        markAsFavoriteButton.setVisibility(View.INVISIBLE);
+    }
+
     private void setup(MovieViewModelType viewModel) {
         this.viewModel = viewModel;
         setTitle(viewModel.getTitle());
@@ -103,13 +123,25 @@ public class MovieDetailActivity extends AppCompatActivity {
         releaseDateTextView.setText(viewModel.getReleaseDate());
         synopsisTextView.setText(viewModel.getSynopsis());
         durationTextView.setText(viewModel.getDuration());
+
+        if (favoriteMovieStorage.movieExists(viewModel.getId())) {
+            showRemoveFromFavoriteButton();
+        } else {
+            showMarkAsFavoriteButton();
+        }
     }
 
     public void markAsFavorite(View button) {
-        Uri uri = viewModel.markAsFavorite(getContentResolver());
+        Uri uri = favoriteMovieStorage.markAsFavorite(viewModel.getMovie());
 
         if (uri != null) {
-            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+            showRemoveFromFavoriteButton();
+        }
+    }
+
+    public void removeFromFavorite(View button) {
+        if (favoriteMovieStorage.removeFromFavorite(viewModel.getId())) {
+            showMarkAsFavoriteButton();
         }
     }
 }

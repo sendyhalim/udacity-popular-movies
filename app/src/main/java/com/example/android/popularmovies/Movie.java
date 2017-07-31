@@ -42,7 +42,7 @@ public class Movie {
 
     static public Movie from(Cursor cursor) {
         return new Movie(
-                cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_API_MOVIE_ID)),
+                cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_MOVIE_API_ID)),
                 cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_TITLE)),
                 cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RATING)),
                 cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_SYNOPSIS)),

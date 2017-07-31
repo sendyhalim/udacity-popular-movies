@@ -17,7 +17,7 @@ public class FavoriteMovieContract {
         public static final String TABLE_NAME = "favorite_movies";
 
         // Movie id for moviedb API
-        public static final String COLUMN_API_MOVIE_ID = "movie_id";
+        public static final String COLUMN_MOVIE_API_ID = "movie_api_id";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_RATING = "rating";
         public static final String COLUMN_SYNOPSIS = "synopsis";

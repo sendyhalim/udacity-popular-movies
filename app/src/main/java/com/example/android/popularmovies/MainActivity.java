@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
         moviesRecyclerView.setAdapter(moviesAdapter);
 
         api = new MovieApi();
-        favoriteMovieStorage = new FavoriteMovieStorage();
+        favoriteMovieStorage = new FavoriteMovieStorage(getContentResolver());
         currentActionBarTitle = getString(R.string.popularMovies);
         loadData(api.fetchPopularMovies(1));
     }
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
 
         if (id == R.id.showFavoriteMovies) {
             currentActionBarTitle = getString(R.string.favoriteMovies);
-            Movie[] movies = favoriteMovieStorage.fetchFavoriteMovies(getContentResolver());
+            Movie[] movies = favoriteMovieStorage.fetchFavoriteMovies();
             moviesAdapter.setMovies(createViewModels(movies));
         }
 

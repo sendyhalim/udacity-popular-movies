@@ -18,7 +18,7 @@ public class FavoriteMovieDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_TABLE = "CREATE TABLE "    + FavoriteMovieEntry.TABLE_NAME + " (" +
                 FavoriteMovieEntry._ID                 + " INTEGER PRIMARY KEY, " +
-                FavoriteMovieEntry.COLUMN_API_MOVIE_ID + " INTEGER UNIQUE NOT NULL, " +
+                FavoriteMovieEntry.COLUMN_MOVIE_API_ID + " INTEGER UNIQUE NOT NULL, " +
                 FavoriteMovieEntry.COLUMN_TITLE        + " TEXT NOT NULL, " +
                 FavoriteMovieEntry.COLUMN_RATING  + " DOUBLE NOT NULL," +
                 FavoriteMovieEntry.COLUMN_SYNOPSIS  + " TEXT NOT NULL," +

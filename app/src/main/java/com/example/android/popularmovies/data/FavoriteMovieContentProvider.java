@@ -106,7 +106,11 @@ public class FavoriteMovieContentProvider extends ContentProvider {
         if (match == FAVORITE_MOVIE_WITH_ID) {
             String id = uri.getPathSegments().get(1);
 
-            deletedCount = db.delete(FavoriteMovieEntry.TABLE_NAME, "_id=?", new String[]{id});
+            deletedCount = db.delete(
+                FavoriteMovieEntry.TABLE_NAME,
+                FavoriteMovieEntry.COLUMN_MOVIE_API_ID + "=?",
+                new String[]{id}
+            );
         } else {
             throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

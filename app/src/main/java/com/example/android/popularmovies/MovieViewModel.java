@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import com.example.android.popularmovies.data.FavoriteMovieContract.FavoriteMovieEntry;
+import com.example.android.popularmovies.data.FavoriteMovieStorage;
 
 interface MovieViewModelType {
     String previewImage();
@@ -15,7 +16,7 @@ interface MovieViewModelType {
     String getReleaseDate();
     String getSynopsis();
     String getDuration();
-    Uri markAsFavorite(ContentResolver contentResolver);
+    Movie getMovie();
 }
 
 public class MovieViewModel implements  MovieViewModelType {
@@ -53,17 +54,7 @@ public class MovieViewModel implements  MovieViewModelType {
         return Integer.toString(movie.durationInMinutes) + " minutes";
     }
 
-    public Uri markAsFavorite(ContentResolver contentResolver) {
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(FavoriteMovieEntry.COLUMN_API_MOVIE_ID, movie.id);
-        contentValues.put(FavoriteMovieEntry.COLUMN_TITLE, movie.title);
-        contentValues.put(FavoriteMovieEntry.COLUMN_RATING, movie.rating);
-        contentValues.put(FavoriteMovieEntry.COLUMN_SYNOPSIS, movie.synopsis);
-        contentValues.put(FavoriteMovieEntry.COLUMN_RELEASE_DATE, movie.releaseDate);
-        contentValues.put(FavoriteMovieEntry.COLUMN_PREVIEW_RELATIVE_PATH, movie.previewRelativePath);
-        contentValues.put(FavoriteMovieEntry.COLUMN_DURATION_IN_MINUTES, movie.durationInMinutes);
-
-        return contentResolver.insert(FavoriteMovieEntry.CONTENT_URI, contentValues);
+    public Movie getMovie() {
+        return this.movie;
     }
 }

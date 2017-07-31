@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
     }
 
     private void loadData(Call<MovieCollectionResponse> apiCall) {
-        setTitle(currentActionBarTitle);
         progressBar.setVisibility(View.VISIBLE);
         moviesRecyclerView.setVisibility(View.INVISIBLE);
 
@@ -108,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
 
         if (id == R.id.showMostPopularMovies) {
             currentActionBarTitle = getString(R.string.popularMovies);
+            setTitle(currentActionBarTitle);
             loadData(api.fetchPopularMovies(page));
 
             return true;
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
 
         if (id == R.id.showTopRatedMovies) {
             currentActionBarTitle = getString(R.string.topRatedMovies);
+            setTitle(currentActionBarTitle);
             loadData(api.fetchTopRatedMovies(page));
 
             return true;
@@ -122,8 +123,11 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
 
         if (id == R.id.showFavoriteMovies) {
             currentActionBarTitle = getString(R.string.favoriteMovies);
+            setTitle(currentActionBarTitle);
             Movie[] movies = favoriteMovieStorage.fetchFavoriteMovies();
             moviesAdapter.setMovies(createViewModels(movies));
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

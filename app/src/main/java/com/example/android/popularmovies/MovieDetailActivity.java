@@ -1,6 +1,7 @@
 package com.example.android.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView durationTextView;
 
     private MovieApi api;
+    private MovieViewModelType viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,30 +72,31 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailContainerView.setVisibility(View.INVISIBLE);
 
         api.fetchMovie(id)
-                .enqueue(new Callback<Movie>() {
-                    @Override
-                    public void onResponse(Call<Movie> call, Response<Movie> response) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        movieDetailContainerView.setVisibility(View.VISIBLE);
-                        setup(new MovieViewModel(response.body()));
-                    }
+            .enqueue(new Callback<Movie>() {
+                @Override
+                public void onResponse(Call<Movie> call, Response<Movie> response) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    movieDetailContainerView.setVisibility(View.VISIBLE);
+                    setup(new MovieViewModel(response.body()));
+                }
 
-                    @Override
-                    public void onFailure(Call<Movie> call, Throwable t) {
-                        progressBar.setVisibility(View.INVISIBLE);
+                @Override
+                public void onFailure(Call<Movie> call, Throwable t) {
+                    progressBar.setVisibility(View.INVISIBLE);
 
-                        Toast
-                            .makeText(getApplicationContext(), "Error " + t.toString(), Toast.LENGTH_SHORT)
-                            .show();                    }
-                });
+                    Toast
+                        .makeText(getApplicationContext(), "Error " + t.toString(), Toast.LENGTH_SHORT)
+                        .show();                    }
+            });
     }
 
     private void setup(MovieViewModelType viewModel) {
+        this.viewModel = viewModel;
         setTitle(viewModel.getTitle());
 
         Picasso.with(getApplicationContext())
-                .load(viewModel.previewImage())
-                .into(movieImageView);
+            .load(viewModel.previewImage())
+            .into(movieImageView);
 
         titleTextView.setText(viewModel.getTitle());
         ratingTextView.setText(viewModel.getRating());
@@ -103,7 +106,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void markAsFavorite(View button) {
-        Log.i("MEH", "WOTTTTTTTT");
-    }
+        Uri uri = viewModel.markAsFavorite(getContentResolver());
 
+        if (uri != null) {
+            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
 }

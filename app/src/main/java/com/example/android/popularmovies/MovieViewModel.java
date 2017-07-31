@@ -1,5 +1,12 @@
 package com.example.android.popularmovies;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
+import android.widget.Toast;
+
+import com.example.android.popularmovies.data.FavoriteMovieContract.FavoriteMovieEntry;
+
 interface MovieViewModelType {
     String previewImage();
     int getId();
@@ -8,6 +15,7 @@ interface MovieViewModelType {
     String getReleaseDate();
     String getSynopsis();
     String getDuration();
+    Uri markAsFavorite(ContentResolver contentResolver);
 }
 
 public class MovieViewModel implements  MovieViewModelType {
@@ -43,5 +51,13 @@ public class MovieViewModel implements  MovieViewModelType {
 
     public String getDuration() {
         return Integer.toString(movie.durationInMinutes) + " minutes";
+    }
+
+    public Uri markAsFavorite(ContentResolver contentResolver) {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(FavoriteMovieEntry.COLUMN_API_MOVIE_ID, movie.id);
+        contentValues.put(FavoriteMovieEntry.COLUMN_TITLE, movie.title);
+        return contentResolver.insert(FavoriteMovieEntry.CONTENT_URI, contentValues);
     }
 }

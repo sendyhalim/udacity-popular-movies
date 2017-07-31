@@ -37,6 +37,8 @@ public class FavoriteMovieStorage {
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+
         return movies.toArray(new Movie[movies.size()]);
     }
 }

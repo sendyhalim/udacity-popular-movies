@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
-    private Movie[] movies;
+    private MovieViewModelType[] movies;
 
     private OnClickHandler onClickHandler;
 
@@ -38,8 +38,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        MovieViewModel viewModel = new MovieViewModel(movies[position]);
-        holder.setup(viewModel);
+        holder.setup(movies[position]);
     }
 
     @Override
@@ -73,7 +72,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         }
     }
 
-    public void setMovies(Movie[] movies) {
+    public void setMovies(MovieViewModelType[] movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }

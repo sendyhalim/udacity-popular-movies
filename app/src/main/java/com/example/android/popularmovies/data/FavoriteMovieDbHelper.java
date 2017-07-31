@@ -14,7 +14,6 @@ public class FavoriteMovieDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_TABLE = "CREATE TABLE "    + FavoriteMovieEntry.TABLE_NAME + " (" +

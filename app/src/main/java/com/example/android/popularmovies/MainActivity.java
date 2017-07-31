@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
                 moviesRecyclerView.setVisibility(View.VISIBLE);
 
                 if (response.isSuccessful()) {
-                    moviesAdapter.setMovies(response.body().movies);
+                    moviesAdapter.setMovies(createViewModels(response.body().movies));
                 }
             }
 
@@ -101,13 +103,27 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
         if (id == R.id.showMostPopularMovies) {
             currentActionBarTitle = getString(R.string.popularMovies);
             loadData(api.fetchPopularMovies(page));
+
             return true;
-        } else if (id == R.id.showTopRatedMovies) {
+        }
+
+        if (id == R.id.showTopRatedMovies) {
             currentActionBarTitle = getString(R.string.topRatedMovies);
             loadData(api.fetchTopRatedMovies(page));
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public MovieViewModelType[] createViewModels(Movie[] movies) {
+        ArrayList<MovieViewModelType> viewModels = new ArrayList<MovieViewModelType>();
+
+        for (Movie movie: movies) {
+            viewModels.add(new MovieViewModel(movie));
+        }
+
+        return viewModels.toArray(new MovieViewModelType[viewModels.size()]);
     }
 }

@@ -58,7 +58,11 @@ public class MovieViewModel implements  MovieViewModelType {
 
         contentValues.put(FavoriteMovieEntry.COLUMN_API_MOVIE_ID, movie.id);
         contentValues.put(FavoriteMovieEntry.COLUMN_TITLE, movie.title);
-        contentValues.put(FavoriteMovieEntry.COLUMN_PREVIEW_URL, previewImage());
+        contentValues.put(FavoriteMovieEntry.COLUMN_RATING, movie.rating);
+        contentValues.put(FavoriteMovieEntry.COLUMN_SYNOPSIS, movie.synopsis);
+        contentValues.put(FavoriteMovieEntry.COLUMN_RELEASE_DATE, movie.releaseDate);
+        contentValues.put(FavoriteMovieEntry.COLUMN_PREVIEW_RELATIVE_PATH, movie.previewRelativePath);
+        contentValues.put(FavoriteMovieEntry.COLUMN_DURATION_IN_MINUTES, movie.durationInMinutes);
 
         return contentResolver.insert(FavoriteMovieEntry.CONTENT_URI, contentValues);
     }

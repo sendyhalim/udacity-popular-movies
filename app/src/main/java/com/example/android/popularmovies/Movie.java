@@ -1,6 +1,11 @@
 package com.example.android.popularmovies;
 
+import android.database.Cursor;
+
+import com.example.android.popularmovies.data.FavoriteMovieContract;
 import com.google.gson.annotations.SerializedName;
+
+import static com.example.android.popularmovies.data.FavoriteMovieContract.*;
 
 class MovieCollectionResponse {
     public final int page;
@@ -14,7 +19,7 @@ class MovieCollectionResponse {
     }
 }
 
-class Movie {
+public class Movie {
     public final int id;
 
     @SerializedName("original_title")
@@ -34,6 +39,18 @@ class Movie {
 
     @SerializedName("runtime")
     public final int durationInMinutes;
+
+    static public Movie from(Cursor cursor) {
+        return new Movie(
+                cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_API_MOVIE_ID)),
+                cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_TITLE)),
+                cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RATING)),
+                cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_SYNOPSIS)),
+                cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RELEASE_DATE)),
+                cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_PREVIEW_RELATIVE_PATH)),
+                cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_DURATION_IN_MINUTES))
+        );
+    }
 
     public Movie(
         int id,

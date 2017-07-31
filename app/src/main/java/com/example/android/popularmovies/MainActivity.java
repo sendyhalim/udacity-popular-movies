@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.android.popularmovies.data.FavoriteMovieContract;
+import com.example.android.popularmovies.data.FavoriteMovieStorage;
 
 import java.util.ArrayList;
 
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
     private MoviesAdapter moviesAdapter;
     private String currentActionBarTitle;
     private MovieApi api;
+    private FavoriteMovieStorage favoriteMovieStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
         moviesRecyclerView.setAdapter(moviesAdapter);
 
         api = new MovieApi();
+        favoriteMovieStorage = new FavoriteMovieStorage();
         currentActionBarTitle = getString(R.string.popularMovies);
         loadData(api.fetchPopularMovies(1));
     }
@@ -112,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
             loadData(api.fetchTopRatedMovies(page));
 
             return true;
+        }
+
+        if (id == R.id.showFavoriteMovies) {
+            currentActionBarTitle = getString(R.string.favoriteMovies);
+            Movie[] movies = favoriteMovieStorage.fetchFavoriteMovies(getContentResolver());
+            moviesAdapter.setMovies(createViewModels(movies));
         }
 
         return super.onOptionsItemSelected(item);

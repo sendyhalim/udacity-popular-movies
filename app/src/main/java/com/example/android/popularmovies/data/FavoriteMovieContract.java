@@ -19,5 +19,6 @@ public class FavoriteMovieContract {
         // Movie id for moviedb API
         public static final String COLUMN_API_MOVIE_ID = "movie_id";
         public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_PREVIEW_URL = "preview_url";
     }
 }

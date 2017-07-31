@@ -17,10 +17,11 @@ public class FavoriteMovieDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String CREATE_TABLE = "CREATE TABLE "  + FavoriteMovieEntry.TABLE_NAME + " (" +
-                FavoriteMovieEntry._ID                + " INTEGER PRIMARY KEY, " +
+        final String CREATE_TABLE = "CREATE TABLE "    + FavoriteMovieEntry.TABLE_NAME + " (" +
+                FavoriteMovieEntry._ID                 + " INTEGER PRIMARY KEY, " +
                 FavoriteMovieEntry.COLUMN_API_MOVIE_ID + " INTEGER UNIQUE NOT NULL, " +
-                FavoriteMovieEntry.COLUMN_TITLE    + " TEXT NOT NULL);";
+                FavoriteMovieEntry.COLUMN_TITLE        + " TEXT NOT NULL, " +
+                FavoriteMovieEntry.COLUMN_PREVIEW_URL  + " TEXT NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }

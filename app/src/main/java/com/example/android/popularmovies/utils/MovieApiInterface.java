@@ -2,6 +2,7 @@ package com.example.android.popularmovies.utils;
 
 import com.example.android.popularmovies.models.Movie;
 import com.example.android.popularmovies.models.MovieCollectionResponse;
+import com.example.android.popularmovies.models.ReviewCollectionResponse;
 import com.example.android.popularmovies.models.TrailerCollectionResponse;
 
 import retrofit2.Call;
@@ -30,6 +31,12 @@ interface MovieApiInterface {
 
     @GET("movie/{id}/trailers")
     Call<TrailerCollectionResponse> trailers(
+            @Path("id") int id,
+            @Query("api_key") String apiKey
+    );
+
+    @GET("movie/{id}/reviews")
+    Call<ReviewCollectionResponse> reviews(
             @Path("id") int id,
             @Query("api_key") String apiKey
     );

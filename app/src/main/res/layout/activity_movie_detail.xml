@@ -140,11 +140,34 @@
                 app:layout_constraintLeft_toRightOf="parent" />
 
             <!--Trailers-->
+            <View
+                android:id="@+id/trailerTopHorizontalLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD"
+                app:layout_constraintTop_toBottomOf="@id/synopsisTextView"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/trailerHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/trailers"
+                android:textSize="@dimen/textSizeHeader"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/trailerTopHorizontalLine"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/trailersRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/synopsisTextView" />
+                app:layout_constraintTop_toBottomOf="@id/trailerHeader"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

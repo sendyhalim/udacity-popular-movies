@@ -9,4 +9,5 @@
     <string name="markAsFavorite">Mark As Favorite</string>
     <string name="removeFromFavorite">Remove From Favorite</string>
     <string name="favoriteMovies">Favorite Movies</string>
+    <string name="trailers">Trailers</string>
 </resources>

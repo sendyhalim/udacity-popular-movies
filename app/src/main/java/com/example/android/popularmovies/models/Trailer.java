@@ -5,18 +5,14 @@ import android.database.Cursor;
 import com.google.gson.annotations.SerializedName;
 
 public class Trailer {
-    @SerializedName("id")
-    public final int id;
+    @SerializedName("source")
+    public final String youtubeKey;
 
     @SerializedName("name")
     public final String name;
 
-    @SerializedName("key")
-    public final String youtubeKey;
-
-    public Trailer(int id, String name, String youtubeKey) {
-        this.id = id;
-        this.name = name;
+    public Trailer(String youtubeKey, String name) {
         this.youtubeKey = youtubeKey;
+        this.name = name;
     }
 }

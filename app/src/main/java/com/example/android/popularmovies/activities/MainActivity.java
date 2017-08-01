@@ -13,11 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.popularmovies.models.Movie;
+import com.example.android.popularmovies.models.TrailerViewModelType;
 import com.example.android.popularmovies.utils.MovieApi;
 import com.example.android.popularmovies.models.MovieCollectionResponse;
 import com.example.android.popularmovies.models.MovieViewModel;
 import com.example.android.popularmovies.models.MovieViewModelType;
-import com.example.android.popularmovies.utils.MoviesAdapter;
+import com.example.android.popularmovies.adapters.MoviesAdapter;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.data.FavoriteMovieStorage;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private MoviesAdapter moviesAdapter;
+    public MoviesAdapter moviesAdapter;
     private String currentActionBarTitle;
     private MovieApi api;
     private FavoriteMovieStorage favoriteMovieStorage;
@@ -138,13 +139,13 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnC
         return super.onOptionsItemSelected(item);
     }
 
-    public MovieViewModelType[] createViewModels(Movie[] movies) {
+    private ArrayList<MovieViewModelType> createViewModels(Movie[] movies) {
         ArrayList<MovieViewModelType> viewModels = new ArrayList<MovieViewModelType>();
 
         for (Movie movie: movies) {
             viewModels.add(new MovieViewModel(movie));
         }
 
-        return viewModels.toArray(new MovieViewModelType[viewModels.size()]);
+        return viewModels;
     }
 }

@@ -3,7 +3,7 @@ package com.example.android.popularmovies.models;
 import com.google.gson.annotations.SerializedName;
 
 public class TrailerCollectionResponse {
-    @SerializedName("results")
+    @SerializedName("youtube")
     public final Trailer[] trailers;
 
     public TrailerCollectionResponse(Trailer[] trailers) {

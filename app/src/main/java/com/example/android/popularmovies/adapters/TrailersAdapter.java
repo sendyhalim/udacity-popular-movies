@@ -1,29 +1,33 @@
-package com.example.android.popularmovies.utils;
+package com.example.android.popularmovies.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.popularmovies.R;
-import com.example.android.popularmovies.models.MovieViewModelType;
+import com.example.android.popularmovies.models.TrailerViewModelType;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
-    private MovieViewModelType[] movies;
+public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHolder> {
+    private ArrayList<TrailerViewModelType> trailers;
 
     private OnClickHandler onClickHandler;
 
     public interface OnClickHandler {
-        void onMovieClicked(MovieViewModelType movieViewModel);
+        void onTrailerClicked(TrailerViewModelType trailerViewModel);
     }
 
-    public MoviesAdapter(OnClickHandler onClickHandler) {
+    public TrailersAdapter(OnClickHandler onClickHandler) {
         this.onClickHandler = onClickHandler;
     }
 
@@ -33,26 +37,26 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
-        View view = inflater.inflate(R.layout.movie_item, parent, shouldAttachToParentImmediately);
+        View view = inflater.inflate(R.layout.trailer_item, parent, shouldAttachToParentImmediately);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setup(movies[position]);
+        holder.setup(trailers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return movies == null ? 0 : movies.length;
+        return trailers == null ? 0 : trailers.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.movieImageView)
-        public ImageView movieImageView;
+        @BindView(R.id.trailerNameTextView)
+        public TextView trailerNameTextView;
 
-        MovieViewModelType viewModel;
+        TrailerViewModelType viewModel;
 
         public ViewHolder(View view) {
             super(view);
@@ -62,20 +66,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            onClickHandler.onMovieClicked(viewModel);
+            onClickHandler.onTrailerClicked(viewModel);
         }
 
-        public void setup(MovieViewModelType viewModel) {
+        public void setup(TrailerViewModelType viewModel) {
             this.viewModel = viewModel;
 
-            Picasso.with(movieImageView.getContext())
-                    .load(viewModel.previewImage())
-                    .into(movieImageView);
+            trailerNameTextView.setText(viewModel.getName());
         }
     }
 
-    public void setMovies(MovieViewModelType[] movies) {
-        this.movies = movies;
+    public void setTrailers(ArrayList<TrailerViewModelType> trailers) {
+        this.trailers = trailers;
         notifyDataSetChanged();
     }
 }

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,13 +15,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.adapters.TrailersAdapter;
 import com.example.android.popularmovies.models.Movie;
 import com.example.android.popularmovies.models.MovieViewModel;
 import com.example.android.popularmovies.models.MovieViewModelType;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.data.FavoriteMovieStorage;
+import com.example.android.popularmovies.models.Trailer;
+import com.example.android.popularmovies.models.TrailerCollectionResponse;
+import com.example.android.popularmovies.models.TrailerViewModel;
+import com.example.android.popularmovies.models.TrailerViewModelType;
 import com.example.android.popularmovies.utils.MovieApi;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity
+        implements TrailersAdapter.OnClickHandler {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
@@ -57,9 +68,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.removeFromFavoriteButton)
     Button removeFromFavoriteButton;
 
+    @BindView(R.id.trailersRecyclerView)
+    RecyclerView trailersRecyclerView;
+
     private MovieApi api;
     private MovieViewModelType viewModel;
     private FavoriteMovieStorage favoriteMovieStorage;
+    private TrailersAdapter trailersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +94,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (intent.hasExtra(Intent.EXTRA_TITLE)) {
             setTitle(intent.getStringExtra(Intent.EXTRA_TITLE));
         }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        trailersRecyclerView.setLayoutManager(layoutManager);
+
+        // Setup adapter
+        trailersAdapter = new TrailersAdapter(this);
+        trailersRecyclerView.setAdapter(trailersAdapter);
     }
 
     private void loadMovie(int id) {
@@ -133,6 +155,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         } else {
             showMarkAsFavoriteButton();
         }
+
+        loadTrailers(api.fetchTrailers(viewModel.getId()));
     }
 
     public void markAsFavorite(View button) {
@@ -148,4 +172,43 @@ public class MovieDetailActivity extends AppCompatActivity {
             showMarkAsFavoriteButton();
         }
     }
+
+    private void loadTrailers(Call<TrailerCollectionResponse> apiCall) {
+        trailersRecyclerView.setVisibility(View.INVISIBLE);
+
+        apiCall.enqueue(new Callback<TrailerCollectionResponse>() {
+            @Override
+            public void onResponse(Call<TrailerCollectionResponse> call, Response<TrailerCollectionResponse> response) {
+                trailersRecyclerView.setVisibility(View.VISIBLE);
+
+                if (response.isSuccessful()) {
+                    trailersAdapter.setTrailers(createTrailerViewModels(response.body().trailers));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TrailerCollectionResponse> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(getApplicationContext(), "Error " + t.toString(), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+    }
+
+    private ArrayList<TrailerViewModelType> createTrailerViewModels(Trailer[] trailers) {
+        ArrayList<TrailerViewModelType> viewModels = new ArrayList<TrailerViewModelType>();
+
+        for (Trailer trailer: trailers) {
+            viewModels.add(new TrailerViewModel(trailer));
+        }
+
+        return viewModels;
+    }
+
+    @Override
+    public void onTrailerClicked(TrailerViewModelType trailerViewModel) {
+        Log.i("AAAAAAAAAAAA", trailerViewModel.getName());
+    }
 }
+

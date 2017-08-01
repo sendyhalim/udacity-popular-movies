@@ -1,8 +1,11 @@
 package com.example.android.popularmovies.utils;
 
+import android.util.Log;
+
 import com.example.android.popularmovies.BuildConfig;
 import com.example.android.popularmovies.models.Movie;
 import com.example.android.popularmovies.models.MovieCollectionResponse;
+import com.example.android.popularmovies.models.TrailerCollectionResponse;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -32,6 +35,10 @@ public class MovieApi {
 
     public Call<Movie> fetchMovie(int id) {
         return request().movie(id, BuildConfig.MOVIE_DB_API_KEY);
+    }
+
+    public Call<TrailerCollectionResponse> fetchTrailers(int id) {
+        return request().trailers(id, BuildConfig.MOVIE_DB_API_KEY);
     }
 }
 

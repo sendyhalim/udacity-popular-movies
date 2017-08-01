@@ -208,7 +208,13 @@ public class MovieDetailActivity extends AppCompatActivity
 
     @Override
     public void onTrailerClicked(TrailerViewModelType trailerViewModel) {
-        Log.i("AAAAAAAAAAAA", trailerViewModel.getName());
+        Uri trailerUri = trailerViewModel.getTrailerUri();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, trailerUri);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
 

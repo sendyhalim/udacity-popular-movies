@@ -1,7 +1,7 @@
 package com.example.android.popularmovies.models;
 
 
-public class ReviewViewModelType {
+public interface ReviewViewModelType {
     String getAuthor();
     String getContent();
 }

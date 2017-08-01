@@ -15,12 +15,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.adapters.ReviewsAdapter;
 import com.example.android.popularmovies.adapters.TrailersAdapter;
 import com.example.android.popularmovies.models.Movie;
 import com.example.android.popularmovies.models.MovieViewModel;
 import com.example.android.popularmovies.models.MovieViewModelType;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.data.FavoriteMovieStorage;
+import com.example.android.popularmovies.models.Review;
+import com.example.android.popularmovies.models.ReviewCollectionResponse;
+import com.example.android.popularmovies.models.ReviewViewModel;
+import com.example.android.popularmovies.models.ReviewViewModelType;
 import com.example.android.popularmovies.models.Trailer;
 import com.example.android.popularmovies.models.TrailerCollectionResponse;
 import com.example.android.popularmovies.models.TrailerViewModel;
@@ -71,10 +76,14 @@ public class MovieDetailActivity extends AppCompatActivity
     @BindView(R.id.trailersRecyclerView)
     RecyclerView trailersRecyclerView;
 
+    @BindView(R.id.reviewsRecyclerView)
+    RecyclerView reviewsRecyclerView;
+
     private MovieApi api;
     private MovieViewModelType viewModel;
     private FavoriteMovieStorage favoriteMovieStorage;
     private TrailersAdapter trailersAdapter;
+    private ReviewsAdapter reviewsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +104,17 @@ public class MovieDetailActivity extends AppCompatActivity
             setTitle(intent.getStringExtra(Intent.EXTRA_TITLE));
         }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        trailersRecyclerView.setLayoutManager(layoutManager);
-
-        // Setup adapter
+        // Setup trailer recycler view
         trailersAdapter = new TrailersAdapter(this);
+        trailersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         trailersRecyclerView.setAdapter(trailersAdapter);
+
+        // Setup reviews recycler view
+        reviewsAdapter = new ReviewsAdapter();
+        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        reviewsRecyclerView.setAdapter(reviewsAdapter);
     }
+
 
     private void loadMovie(int id) {
         progressBar.setVisibility(View.VISIBLE);
@@ -126,15 +139,18 @@ public class MovieDetailActivity extends AppCompatActivity
             });
     }
 
+
     private void showMarkAsFavoriteButton() {
         removeFromFavoriteButton.setVisibility(View.INVISIBLE);
         markAsFavoriteButton.setVisibility(View.VISIBLE);
     }
 
+
     private void showRemoveFromFavoriteButton() {
         removeFromFavoriteButton.setVisibility(View.VISIBLE);
         markAsFavoriteButton.setVisibility(View.INVISIBLE);
     }
+
 
     private void setup(MovieViewModelType viewModel) {
         this.viewModel = viewModel;
@@ -157,7 +173,9 @@ public class MovieDetailActivity extends AppCompatActivity
         }
 
         loadTrailers(api.fetchTrailers(viewModel.getId()));
+        loadReviews(api.fetchReviews(viewModel.getId()));
     }
+
 
     public void markAsFavorite(View button) {
         Uri uri = favoriteMovieStorage.markAsFavorite(viewModel.getMovie());
@@ -167,11 +185,13 @@ public class MovieDetailActivity extends AppCompatActivity
         }
     }
 
+
     public void removeFromFavorite(View button) {
         if (favoriteMovieStorage.removeFromFavorite(viewModel.getId())) {
             showMarkAsFavoriteButton();
         }
     }
+
 
     private void loadTrailers(Call<TrailerCollectionResponse> apiCall) {
         trailersRecyclerView.setVisibility(View.INVISIBLE);
@@ -188,13 +208,47 @@ public class MovieDetailActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<TrailerCollectionResponse> call, Throwable t) {
-                progressBar.setVisibility(View.INVISIBLE);
-
-                Toast.makeText(getApplicationContext(), "Error " + t.toString(), Toast.LENGTH_SHORT)
-                        .show();
+                Toast
+                    .makeText(getApplicationContext(), "Error " + t.toString(), Toast.LENGTH_SHORT)
+                    .show();
             }
         });
     }
+
+
+    private void loadReviews(Call<ReviewCollectionResponse> apiCall) {
+        reviewsRecyclerView.setVisibility(View.INVISIBLE);
+
+        apiCall.enqueue(new Callback<ReviewCollectionResponse>() {
+            @Override
+            public void onResponse(Call<ReviewCollectionResponse> call, Response<ReviewCollectionResponse> response) {
+                reviewsRecyclerView.setVisibility(View.VISIBLE);
+
+                if (response.isSuccessful()) {
+                    reviewsAdapter.setReviews(createReviewViewModels(response.body().reviews));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewCollectionResponse> call, Throwable t) {
+                Toast
+                    .makeText(getApplicationContext(), "Error " + t.toString(), Toast.LENGTH_SHORT)
+                    .show();
+            }
+        });
+    }
+
+
+    private ArrayList<ReviewViewModelType> createReviewViewModels(Review[] reviews) {
+        ArrayList<ReviewViewModelType> viewModels = new ArrayList<ReviewViewModelType>();
+
+        for (Review review: reviews) {
+            viewModels.add(new ReviewViewModel(review));
+        }
+
+        return viewModels;
+    }
+
 
     private ArrayList<TrailerViewModelType> createTrailerViewModels(Trailer[] trailers) {
         ArrayList<TrailerViewModelType> viewModels = new ArrayList<TrailerViewModelType>();
@@ -205,6 +259,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
         return viewModels;
     }
+
 
     @Override
     public void onTrailerClicked(TrailerViewModelType trailerViewModel) {

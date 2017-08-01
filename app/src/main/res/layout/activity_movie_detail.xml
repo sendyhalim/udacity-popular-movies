@@ -141,7 +141,7 @@
 
             <!--Trailers-->
             <View
-                android:id="@+id/trailerTopHorizontalLine"
+                android:id="@+id/trailersTopHorizontalLine"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#DDDDDD"
@@ -155,7 +155,7 @@
                 android:text="@string/trailers"
                 android:textSize="@dimen/textSizeHeader"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/trailerTopHorizontalLine"
+                app:layout_constraintTop_toBottomOf="@id/trailersTopHorizontalLine"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp" />
@@ -165,6 +165,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/trailerHeader"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp" />
+
+            <!--Reviews-->
+            <TextView
+                android:id="@+id/reviewHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reviews"
+                android:textSize="@dimen/textSizeHeader"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/trailersRecyclerView"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reviewsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/reviewHeader"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp" />

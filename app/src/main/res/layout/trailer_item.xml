@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageButton
+        android:id="@+id/playTrailerButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/play_trailer_icon" />
+
     <TextView
         android:id="@+id/trailerNameTextView"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:textSize="@dimen/textSizeMedium"
+        android:gravity="center_vertical|right"
+        app:layout_constraintLeft_toRightOf="@id/playTrailerButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="2dp"
+        android:background="#DDDDDD" />
 </android.support.constraint.ConstraintLayout>
